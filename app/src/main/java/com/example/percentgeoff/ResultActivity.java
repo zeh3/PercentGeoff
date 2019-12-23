@@ -35,24 +35,24 @@ public class ResultActivity extends AppCompatActivity {
         int maxScore = oldIntent.getIntExtra("maxScore", -1);
         int score = oldIntent.getIntExtra("score", -1) * 100;
 
-        pictureBundle = oldIntent.getBundleExtra("pictureBundle");
-        imageBitmap = (Bitmap) pictureBundle.get("data");
+       /* pictureBundle = oldIntent.getBundleExtra("pictureBundle");
+        imageBitmap = (Bitmap) pictureBundle.get("data");*/
 
 
-        Log.d("tag2", "height: " + imageBitmap.getHeight());
+        /*Log.d("tag2", "height: " + imageBitmap.getHeight());
         Log.d("tag2", "width: " + imageBitmap.getWidth());
-        Log.d("tag2", "config: " + imageBitmap.getConfig());
+        Log.d("tag2", "config: " + imageBitmap.getConfig());*/
 
         //Bitmap display = imageBitmap.copy(imageBitmap.getConfig(),false);
-        Bitmap display = Bitmap.createScaledBitmap(imageBitmap, 460, 460, false);
+        //Bitmap display = Bitmap.createScaledBitmap(imageBitmap, 460, 460, false);
 
-        if (Build.VERSION.SDK_INT >= 19) {
+        /*if (Build.VERSION.SDK_INT >= 19) {
             //display.setWidth(150);
             //display.setHeight(150);
-        }
+        }*/
 
 
-        notGeoff.setImageBitmap(display);
+        //notGeoff.setImageBitmap(display);
 
         resultText.setText(score / maxScore + "% Geoff");
 

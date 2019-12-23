@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
-    static List<Question>  questions = new ArrayList<>();
+    static List<Question> questions = new ArrayList<>();
     int score;
-    static int maxScore = 0;
+    int maxScore = 0;
 
     Button first;
     Button second;
@@ -24,33 +24,26 @@ public class QuestionActivity extends AppCompatActivity {
 
     int questionNumber;
 
-    static boolean firstTime = true;
+    TextView questionText;
+
+    //static boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        Intent oldIntent = getIntent();
-        questionNumber = oldIntent.getIntExtra("question", 0);
-        Log.d("questionNum", "" + questionNumber);
+        setUpQuestions();
+
+        //Intent oldIntent = getIntent();
+        questionNumber = 0;
+
+        //Log.d("questionNum", "" + questionNumber);
+        score = 0;
+        maxScore = 0;
 
 
-        if (firstTime) {
-            setUpQuestions();
-            maxScore = questions.size() * 3;
-            score = 0;
-            firstTime = false;
-        }
-        /*if (questionNumber == -1) {
-            questionNumber = 0;
-            score = 0;
-        }*/
+        //score = oldIntent.getIntExtra("score", 0);
 
-        score = oldIntent.getIntExtra("score", 0);
-
-        /*if (questionNumber == questions.size()) {
-            end();
-        }*/
 
         List<String> answers = questions.get(questionNumber).getAnswers();
 
@@ -61,37 +54,43 @@ public class QuestionActivity extends AppCompatActivity {
         third = findViewById(R.id.answer2);
         fourth = findViewById(R.id.answer3);
 
-        TextView questionText = findViewById(R.id.questionText);
+        questionText = findViewById(R.id.questionText);
 
-        questionText.setText(questions.get(questionNumber).getQuestion());
+        rewrite();
+
+
 
         first.setOnClickListener(unused -> {
-            end();
+            maxScore += 3;
+            questionNumber++;
+            rewrite();
         });
 
-        first.setText(answers.get(0));
+
 
         second.setOnClickListener(unused -> {
             score += 1;
-            end();
+            maxScore += 3;
+            questionNumber++;
+            rewrite();
         });
 
-        second.setText(answers.get(1));
 
         third.setOnClickListener(unused -> {
             score += 2;
-            end();
+            maxScore += 3;
+            questionNumber++;
+            rewrite();
         });
 
-        third.setText(answers.get(2));
+
 
         fourth.setOnClickListener(unused -> {
             score += 3;
-            end();
+            maxScore += 3;
+            questionNumber++;
+            rewrite();
         });
-
-        fourth.setText(answers.get(3));
-
 
 
 
@@ -186,7 +185,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    public void end() {
+    /*public void end() {
         Log.d("tag", "ended");
 
 
@@ -202,9 +201,6 @@ public class QuestionActivity extends AppCompatActivity {
             intent.putExtra("score", score);
 
 
-
-
-
         }
 
 
@@ -215,5 +211,36 @@ public class QuestionActivity extends AppCompatActivity {
 
         finish();
         //put code here that finishes the activity and launches the results page
+    }*/
+
+    public void end() {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("maxScore", maxScore);
+        intent.putExtra("score", score);
+        startActivity(intent);
+        finish();
+    }
+
+    public void rewrite() {
+        if (questionNumber >= questions.size()) {
+            end();
+        }
+        //Log.d("tags", "" + questions.size());
+
+        /*Log.d("tags", current.toString());
+        Log.d("tags", current.getQuestion());*/
+        try {
+            Question current = questions.get(questionNumber);
+            questionText.setText(current.getQuestion());
+            first.setText(current.getAnswers().get(0));
+            second.setText(current.getAnswers().get(1));
+            third.setText(current.getAnswers().get(2));
+            fourth.setText(current.getAnswers().get(3));
+        }
+        catch(Exception e) {
+            questionText.setText("error :(");
+        }
+
     }
 }
+
