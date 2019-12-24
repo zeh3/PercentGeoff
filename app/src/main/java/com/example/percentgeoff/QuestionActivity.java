@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
+
     static List<Question> questions = new ArrayList<>();
     int score;
     int maxScore = 0;
@@ -26,24 +27,15 @@ public class QuestionActivity extends AppCompatActivity {
 
     TextView questionText;
 
-    //static boolean firstTime = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         setUpQuestions();
 
-        //Intent oldIntent = getIntent();
         questionNumber = 0;
-
-        //Log.d("questionNum", "" + questionNumber);
         score = 0;
         maxScore = 0;
-
-
-        //score = oldIntent.getIntExtra("score", 0);
-
 
         List<String> answers = questions.get(questionNumber).getAnswers();
 
@@ -53,48 +45,33 @@ public class QuestionActivity extends AppCompatActivity {
         second = findViewById(R.id.answer1);
         third = findViewById(R.id.answer2);
         fourth = findViewById(R.id.answer3);
-
         questionText = findViewById(R.id.questionText);
 
         rewrite();
-
-
 
         first.setOnClickListener(unused -> {
             maxScore += 3;
             questionNumber++;
             rewrite();
         });
-
-
-
         second.setOnClickListener(unused -> {
             score += 1;
             maxScore += 3;
             questionNumber++;
             rewrite();
         });
-
-
         third.setOnClickListener(unused -> {
             score += 2;
             maxScore += 3;
             questionNumber++;
             rewrite();
         });
-
-
-
         fourth.setOnClickListener(unused -> {
             score += 3;
             maxScore += 3;
             questionNumber++;
             rewrite();
         });
-
-
-
-
     }
 
     /**
@@ -102,7 +79,6 @@ public class QuestionActivity extends AppCompatActivity {
      */
     public void setUpQuestions() {
 
-        //FILL OUT MORE LATER
         List<String> firstAnswers = new ArrayList<>();
         firstAnswers.add("Python");
         firstAnswers.add("Other");
@@ -185,33 +161,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    /*public void end() {
-        Log.d("tag", "ended");
-
-
-        //return intent;
-
-        Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra("question", questionNumber + 1);
-        intent.putExtra("score", score);
-
-        if (questionNumber + 1 == questions.size()) {
-            intent = new Intent(this, CameraActivity.class);
-            intent.putExtra("maxScore", maxScore);
-            intent.putExtra("score", score);
-
-
-        }
-
-
-        //startActivity(intent);
-
-
-        startActivity(intent);
-
-        finish();
-        //put code here that finishes the activity and launches the results page
-    }*/
 
     public void end() {
         Intent intent = new Intent(this, ResultActivity.class);
@@ -225,10 +174,7 @@ public class QuestionActivity extends AppCompatActivity {
         if (questionNumber >= questions.size()) {
             end();
         }
-        //Log.d("tags", "" + questions.size());
 
-        /*Log.d("tags", current.toString());
-        Log.d("tags", current.getQuestion());*/
         try {
             Question current = questions.get(questionNumber);
             questionText.setText(current.getQuestion());
@@ -243,4 +189,3 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 }
-
